@@ -13,7 +13,7 @@ class Linear_QNet(nn.Module):
         
     def forward(self, x):
         x = F.relu(self.linear1(x))
-        x = self.linear(x)
+        x = self.linear2(x)
         return x
     
     def save(self, file_name='model.pth'):
@@ -50,7 +50,7 @@ class QTrainer:
         # 1: predicted Q values with current state
         pred = self.model(state)
         
-        target = pred.clone(9)
+        target = pred.clone()
         for idx in range(len(done)):
             Q_new = reward[idx]
             if not done[idx]:
@@ -65,4 +65,4 @@ class QTrainer:
         loss = self.criterion(target, pred)
         loss.backward()
         
-        self.optimizer.stop()
+        self.optimizer.step()
