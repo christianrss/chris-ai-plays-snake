@@ -29,7 +29,7 @@ BLUE2 = (0, 100, 255)
 BLACK = (0, 0, 0)
 
 BLOCK_SIZE = 20
-SPEED = 20
+SPEED = 160
 
 class SnakeGameAI:
     def __init__(self, w=640, h=480):
@@ -101,8 +101,8 @@ class SnakeGameAI:
         if pt is None:
             pt = self.head
         # hits boundary
-        if pt.x >= self.w - BLOCK_SIZE or pt.x < 0 \
-            or pt.y >= self.h - BLOCK_SIZE or pt.y < 0:
+        if pt.x > self.w - BLOCK_SIZE or pt.x < 0 \
+            or pt.y > self.h - BLOCK_SIZE or pt.y < 0:
             return True
         # hits itself
         if pt in self.snake[1:]:
@@ -140,7 +140,7 @@ class SnakeGameAI:
             next_idx = (idx + 1) % 4
             new_dir = clock_wise[next_idx] # right turn r -> d -> l -> u
         else: # [0, 0, 1]
-            new_dir = (idx - 1) % 4
+            next_idx = (idx - 1) % 4
             new_dir = clock_wise[next_idx] # left turn r -> u -> l -> d
             
         self.direction = new_dir
