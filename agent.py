@@ -8,7 +8,7 @@ from helper import plot
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
-LR = 0.01
+LR = 0.001
 
 class Agent:
     
@@ -68,7 +68,8 @@ class Agent:
         return np.array(state, dtype=int)
     
     def remember(self, state, action, reward, next_state, done):
-        self.memory.append((state, action, reward, next_state, done)) # popleft if MAX_MEMORY is reached
+        action_index = np.argmax(action)
+        self.memory.append((state, action_index, reward, next_state, done)) # popleft if MAX_MEMORY is reached
     
     def train_long_memory(self):
         if len(self.memory) > BATCH_SIZE:
@@ -77,6 +78,13 @@ class Agent:
             mini_sample = self.memory
             
         states, actions, rewards, next_states, dones = zip(*mini_sample)
+        
+        states = np.array(states, dtype=np.float32)
+        actions = np.array(actions, dtype=np.int64)
+        rewards = np.array(rewards, dtype=np.float32)
+        next_states = np.array(next_states, dtype=np.float32)
+        dones = np.array(dones, dtype=bool)
+        
         self.trainer.train_step(states, actions, rewards, next_states, dones)
     
     def train_short_memory(self, state, action, reward, next_state, done):

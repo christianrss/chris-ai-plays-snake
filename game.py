@@ -23,9 +23,9 @@ Point = namedtuple('Point', 'x, y')
 
 # rgb colors
 WHITE = (255, 255, 255)
-RED = (200, 0, 0)
-BLUE1 = (0, 0, 255)
-BLUE2 = (0, 100, 255)
+ORANGE = (255, 120, 0)
+GREEN1 = (0, 255, 0)
+GREEN2 = (0, 200, 0)
 BLACK = (0, 0, 0)
 
 BLOCK_SIZE = 20
@@ -111,15 +111,15 @@ class SnakeGameAI:
         return False
     
     def _update_ui(self):
-        self.display.fill(BLACK)
+        self.display.fill(WHITE)
         
         for pt in self.snake:
-            pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
-            pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x+4, pt.y+4, 12, 12))
+            pygame.draw.rect(self.display, GREEN1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
+            pygame.draw.rect(self.display, GREEN2, pygame.Rect(pt.x+4, pt.y+4, 12, 12))
         
-        pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
+        pygame.draw.rect(self.display, ORANGE, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
 
-        text = font.render("Score: " + str(self.score), True, WHITE)
+        text = font.render("Score: " + str(self.score), True, BLACK)
         self.display.blit(text, [0, 0])
         pygame.display.flip()
         
